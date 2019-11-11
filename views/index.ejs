@@ -1,8 +1,28 @@
 <%- include partials/header.ejs %>
-<%- include partials/navbar.ejs %>
+<%- include partials/homenavbar.ejs %>
 
 <body>
-    <h1>Bem vindo ao site</h1>
+    <div class="container">
+        <br />
+        <div class="jumbotron">
+            <h1 class="display-4">Bem-vindo ao TheBlog!</h1>
+            <p class="lead">O TheBlog é um blog desenvolvido em Javascript com Node.</p>
+            <hr class="my-4">
+            <p>O TheBlog é um blog desenvolvido em Javascript com Node. Qualquer dúvida entre em contato com a gente.</p>
+            <a class="btn btn-primary btn-lg" href="#" role="button">Leia mais</a>
+        </div>
+        <% articles.forEach(article => { %>
+            <div class="card">
+                <div class="card-header">
+                    <h4><%= article.title %></h4>
+                </div>
+                <div class="card-body">
+                    <a href="/<%= article.slug %>" class="btn btn-success">Ler Artigo</a>
+                </div>
+            </div>
+            <br />
+        <% }) %>
+    </div>
 </body>
 
 <%- include partials/footer.ejs %>
