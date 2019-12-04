@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const connection = require('./database/database');
 
 const categoriesController = require('./categories/CategoriesController');
@@ -13,6 +14,12 @@ const User = require('./users/User');
 const app = express();
 
 app.set('view engine', 'ejs');
+
+app.use(session({
+    secret: 'segredo',
+    cookie: { maxAge: 600000 }
+}));
+
 app.use(express.static('public'));
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -27,6 +34,25 @@ connection.authenticate().then(() => {
 app.use('/', categoriesController);
 app.use('/', articlesController);
 app.use('/', usersController);
+/*
+app.get('/session', (req, res) => {
+    req.session.user = 'everton';
+    req.session.useremail = 'everton@teste.com';
+    req.session.users = {
+        nome: 'everton',
+        user: 'everton'
+    }
+    res.send('Sessão Gerada');
+});
+
+app.get('/read', (req, res) => {
+    res.json({
+        user: req.session.user,
+        useremail: req.session.useremail,
+        users: req.session.users
+    });
+});
+*/
 
 app.get('/', (req, res) => {
     Article.findAll({
